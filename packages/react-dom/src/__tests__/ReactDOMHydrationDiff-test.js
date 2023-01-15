@@ -3,6 +3,9 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+ * 
+ * @emails react-core
+ * @jest-environment node
  */
 
 'use strict';
@@ -46,7 +49,11 @@ describe('ReactDOMServerHydration', () => {
 
   function formatMessage(args) {
     const [format, ...rest] = args;
-    if (format instanceof Error) {
+    if (
+      format != null &&
+      typeof format.message === 'string' &&
+      typeof format.stack === 'string'
+    ) {
       return 'Caught [' + format.message + ']';
     }
     if (format.indexOf('Error: Uncaught [') === 0) {

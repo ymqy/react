@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+ * @jest-environment node
  */
 
 'use strict';
@@ -16,7 +17,6 @@ let ReactDOMClient;
 let ReactDOMFizzStatic;
 let Suspense;
 let textCache;
-let document;
 let writable;
 let container;
 let buffer = '';
@@ -44,7 +44,8 @@ describe('ReactDOMFizzStatic', () => {
         runScripts: 'dangerously',
       },
     );
-    document = jsdom.window.document;
+    global.window = jsdom.window;
+    global.document = jsdom.window.document;
     container = document.getElementById('container');
 
     buffer = '';

@@ -14,6 +14,24 @@ import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import {rollup} from 'rollup';
 import path from 'path';
+import {TextEncoder, TextDecoder} from 'util';
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
+import {JSDOM} from 'jsdom';
+
+// Polyfills for test environment
+const jsdom = new JSDOM(
+  '<!DOCTYPE html>',
+  {
+    runScripts: 'dangerously',
+  },
+);
+
+global.window = jsdom.window;
+global.document = jsdom.window.document;
+global.navigator = jsdom.window.navigator;
 
 const rollupCache: Map<string, string | null> = new Map();
 

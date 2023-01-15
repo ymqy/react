@@ -9,8 +9,25 @@
 
 'use strict';
 
+global.TextEncoder = require('util').TextEncoder;
+global.TextDecoder = require('util').TextDecoder;
+
 const stream = require('stream');
+const {JSDOM} = require('jsdom');
 const shouldIgnoreConsoleError = require('../../../../../scripts/jest/shouldIgnoreConsoleError');
+
+// Polyfills for test environment
+const jsdom = new JSDOM(
+  '<!DOCTYPE html>',
+  {
+    runScripts: 'dangerously',
+  },
+);
+
+global.window = jsdom.window;
+global.document = jsdom.window.document;
+global.navigator = jsdom.window.navigator;
+global.Node = jsdom.window.Node;
 
 module.exports = function(initModules) {
   let ReactDOM;
@@ -19,7 +36,7 @@ module.exports = function(initModules) {
 
   function resetModules() {
     ({ReactDOM, ReactDOMServer} = initModules());
-    act = require('jest-react').act;
+    ({act} = require('jest-react'));
   }
 
   function shouldUseDocument(reactElement) {

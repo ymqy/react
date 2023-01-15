@@ -28,6 +28,25 @@ import {
 import {enableFloat, enableHostSingletons} from 'shared/ReactFeatureFlags';
 import assign from 'shared/assign';
 import isArray from 'shared/isArray';
+import {TextEncoder, TextDecoder} from 'util';
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
+import {JSDOM} from 'jsdom';
+
+// Polyfills for test environment
+const jsdom = new JSDOM(
+  '<!DOCTYPE html>',
+  {
+    runScripts: 'dangerously',
+  },
+);
+
+global.window = jsdom.window;
+global.document = jsdom.window.document;
+global.navigator = jsdom.window.navigator;
+
 
 // Keep in sync with ReactDOM.js:
 const SecretInternals =

@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+ * @jest-environment node
  */
 
 'use strict';
@@ -17,6 +18,7 @@ let ReactDOMClient;
 let ReactDOMServer;
 let ReactDOMServerBrowser;
 let Scheduler;
+let JSDOM;
 
 // These tests rely both on ReactDOMServer and ReactDOM.
 // If a test only needs ReactDOMServer, put it in ReactServerRendering-test instead.
@@ -29,6 +31,18 @@ describe('ReactDOMServerHydration', () => {
     ReactDOMServer = require('react-dom/server');
     ReactDOMServerBrowser = require('react-dom/server.browser');
     Scheduler = require('scheduler');
+    JSDOM = require('jsdom').JSDOM;
+    
+    // Test Environment
+    const jsdom = new JSDOM(
+      '<!DOCTYPE html><html><head></head><body><div id="container">',
+      {
+        runScripts: 'dangerously',
+      },
+    );
+    global.window = jsdom.window;
+    global.document = jsdom.window.document;
+    global.navigator = jsdom.window.navigator;
   });
 
   it('should have the correct mounting behavior (new hydrate API)', () => {

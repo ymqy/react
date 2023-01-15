@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+ * @jest-environment node
  */
 
 let JSDOM;
@@ -15,7 +16,6 @@ let Scheduler;
 let clientAct;
 let ReactDOMFizzServer;
 let Stream;
-let document;
 let writable;
 let container;
 let buffer = '';
@@ -45,7 +45,9 @@ describe('ReactDOMFizzShellHydration', () => {
         runScripts: 'dangerously',
       },
     );
-    document = jsdom.window.document;
+    global.window = jsdom.window;
+    global.document = jsdom.window.document;
+    global.navigator = jsdom.window.navigator;
     container = document.getElementById('container');
 
     buffer = '';

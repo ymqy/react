@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+ * @jest-environment node
  */
 
 let JSDOM;
@@ -17,7 +18,6 @@ let Stream;
 let Suspense;
 let useId;
 let useState;
-let document;
 let writable;
 let container;
 let buffer = '';
@@ -45,7 +45,9 @@ describe('useId', () => {
         runScripts: 'dangerously',
       },
     );
-    document = jsdom.window.document;
+    global.window = jsdom.window;
+    global.document = jsdom.window.document;
+    global.navigator = jsdom.window.navigator;
     container = document.getElementById('container');
 
     buffer = '';
