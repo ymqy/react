@@ -65,7 +65,7 @@ describe('InvalidEventListeners', () => {
 
     if (!__DEV__) {
       expect(console.error).toHaveBeenCalledTimes(1);
-      expect(console.error.calls.argsFor(0)[0]).toMatch(
+      expect(console.error.calls.argsFor(0)[0].message).toMatch(
         'Expected `onClick` listener to be a function, ' +
           'instead got a value of `string` type.',
       );

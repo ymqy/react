@@ -128,9 +128,11 @@ describe('ReactDOMConsoleErrorReporting', () => {
         expect(console.error.calls.all().map(c => c.args)).toEqual([
           [
             // Reported because we're in a browser click event:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
             expect.objectContaining({
-              message: 'Boom',
+              detail: expect.objectContaining({
+                message: 'Boom',
+              }),
+              type: 'unhandled exception',
             }),
           ],
         ]);
@@ -681,9 +683,11 @@ describe('ReactDOMConsoleErrorReporting', () => {
         expect(console.error.calls.all().map(c => c.args)).toEqual([
           [
             // Reported because we're in a browser click event:
-            expect.stringContaining('Error: Uncaught [Error: Boom]'),
             expect.objectContaining({
-              message: 'Boom',
+              detail: expect.objectContaining({
+                message: 'Boom',
+              }),
+              type: 'unhandled exception',
             }),
           ],
         ]);
