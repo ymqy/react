@@ -5,10 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @emails react-core
+ * @jest-environment node
  */
-
-// TODO: This should actually run in `@jest-environment node` but we currently
-// run an old jest that doesn't support AbortController so we use DOM for now.
 
 'use strict';
 
