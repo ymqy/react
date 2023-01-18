@@ -26,6 +26,10 @@ describe('ReactNewContext', () => {
     gen = require('random-seed');
   });
 
+  afterEach(() => {
+    if (console.error.mockReset) console.error.mockReset();
+  });
+
   function Text(props) {
     Scheduler.unstable_yieldValue(props.text);
     return <span prop={props.text} />;
@@ -867,7 +871,7 @@ describe('ReactNewContext', () => {
       expect(Scheduler).toFlushAndYield(['Foo', 'Foo']);
 
       if (__DEV__) {
-        expect(console.error.calls.argsFor(0)[0]).toContain(
+        expect(console.error.mock.calls[0][0]).toContain(
           'Detected multiple renderers concurrently rendering the same ' +
             'context provider. This is currently unsupported',
         );
@@ -1021,7 +1025,7 @@ describe('ReactNewContext', () => {
       ReactNoop.render(<Context.Consumer />);
       expect(Scheduler).toFlushAndThrow('is not a function');
       if (__DEV__) {
-        expect(console.error.calls.argsFor(0)[0]).toContain(
+        expect(console.error.mock.calls[0][0]).toContain(
           'A context consumer was rendered with multiple children, or a child ' +
             "that isn't a function",
         );

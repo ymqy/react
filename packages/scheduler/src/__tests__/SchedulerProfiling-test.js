@@ -71,6 +71,10 @@ describe('Scheduler', () => {
     // shouldYield = Scheduler.unstable_shouldYield;
   });
 
+  afterEach(() => {
+    if (console.error.mockReset) console.error.mockReset();
+  });
+
   const TaskStartEvent = 1;
   const TaskCompleteEvent = 2;
   const TaskErrorEvent = 3;
@@ -487,7 +491,7 @@ Task 1 [Normal]              │                    █████████�
     global.__MAX_ITERATIONS__ = 120000;
 
     let taskId = 1;
-    while (console.error.calls.count() === 0) {
+    while (console.error.mock.calls.length === 0) {
       taskId++;
       const task = scheduleCallback(NormalPriority, () => {});
       cancelCallback(task);
@@ -495,7 +499,7 @@ Task 1 [Normal]              │                    █████████�
     }
 
     expect(console.error).toHaveBeenCalledTimes(1);
-    expect(console.error.calls.argsFor(0)[0]).toBe(
+    expect(console.error.mock.calls[0][0]).toBe(
       "Scheduler Profiling: Event log exceeded maximum size. Don't forget " +
         'to call `stopLoggingProfilingEvents()`.',
     );

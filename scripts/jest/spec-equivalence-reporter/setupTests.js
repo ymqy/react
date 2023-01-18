@@ -16,7 +16,7 @@ global.expect = function() {
   return expect.apply(this, arguments);
 };
 
-const spyOn = global.spyOn;
+const spyOn = jest.spyOn;
 
 // Spying on console methods in production builds can mask errors.
 // This is why we added an explicit spyOnDev() helper.

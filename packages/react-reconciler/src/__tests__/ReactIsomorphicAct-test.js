@@ -34,6 +34,10 @@ describe('isomorphic act()', () => {
     global.IS_REACT_ACT_ENVIRONMENT = true;
   });
 
+  afterEach(() => {
+    if (console.error.mockReset) console.error.mockReset();
+  });
+
   // @gate __DEV__
   test('bypasses queueMicrotask', async () => {
     const root = ReactNoop.createRoot();
@@ -229,8 +233,8 @@ describe('isomorphic act()', () => {
     await null;
     await null;
 
-    expect(console.error.calls.count()).toBe(1);
-    expect(console.error.calls.argsFor(0)[0]).toContain(
+    expect(console.error).toHaveBeenCalledTimes(1);
+    expect(console.error.mock.calls[0][0]).toContain(
       'Warning: A component suspended inside an `act` scope, but the `act` ' +
         'call was not awaited. When testing React components that ' +
         'depend on asynchronous data, you must await the result:\n\n' +
@@ -282,7 +286,7 @@ describe('isomorphic act()', () => {
     await null;
     await null;
 
-    expect(console.error.calls.count()).toBe(0);
+    expect(console.error).toHaveBeenCalledTimes(0);
 
     // Finish loading the data
     await act(async () => {

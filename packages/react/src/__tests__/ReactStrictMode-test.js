@@ -35,6 +35,10 @@ describe('ReactStrictMode', () => {
     useReducer = React.useReducer;
   });
 
+  afterEach(() => {
+    if (console.log.mockReset) console.log.mockReset();
+  });
+
   it('should appear in the client component stack', () => {
     function Foo() {
       return <div ariaTypo="" />;

@@ -91,6 +91,10 @@ describe('ReactFlight', () => {
     };
   });
 
+  afterEach(() => {
+    if (console.error.mockReset) console.error.mockReset();
+  });
+
   function moduleReference(value) {
     return {
       $$typeof: Symbol.for('react.module.reference'),

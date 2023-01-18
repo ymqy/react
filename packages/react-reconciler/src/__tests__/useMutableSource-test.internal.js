@@ -1917,7 +1917,7 @@ describe('useMutableSource', () => {
           );
           expect(Scheduler).toFlushAndYieldThrough(['c:one']);
 
-          expect(console.error.calls.argsFor(0)[0]).toContain(
+          expect(console.error.mock.calls[0][0]).toContain(
             'Detected multiple renderers concurrently rendering the ' +
               'same mutable source. This is currently unsupported.',
           );
@@ -2001,7 +2001,7 @@ describe('useMutableSource', () => {
           );
           expect(Scheduler).toFlushAndYieldThrough(['c:two']);
 
-          expect(console.error.calls.argsFor(0)[0]).toContain(
+          expect(console.error.mock.calls[0][0]).toContain(
             'Detected multiple renderers concurrently rendering the ' +
               'same mutable source. This is currently unsupported.',
           );

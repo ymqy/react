@@ -1670,7 +1670,7 @@ describe('ReactDOMInput', () => {
   it('sets type, step, min, max before value always', () => {
     const log = [];
     const originalCreateElement = document.createElement;
-    spyOnDevAndProd(document, 'createElement').and.callFake(function(type) {
+    spyOnDevAndProd(document, 'createElement').mockImplementation(function(type) {
       const el = originalCreateElement.apply(this, arguments);
       let value = '';
 
@@ -1684,7 +1684,7 @@ describe('ReactDOMInput', () => {
             log.push('set property value');
           },
         });
-        spyOnDevAndProd(el, 'setAttribute').and.callFake(function(name) {
+        spyOnDevAndProd(el, 'setAttribute').mockImplementation(function(name) {
           log.push('set attribute ' + name);
         });
       }
@@ -1743,7 +1743,7 @@ describe('ReactDOMInput', () => {
 
     const log = [];
     const originalCreateElement = document.createElement;
-    spyOnDevAndProd(document, 'createElement').and.callFake(function(type) {
+    spyOnDevAndProd(document, 'createElement').mockImplementation(function(type) {
       const el = originalCreateElement.apply(this, arguments);
       const getDefaultValue = Object.getOwnPropertyDescriptor(
         HTMLInputElement.prototype,
@@ -1780,7 +1780,7 @@ describe('ReactDOMInput', () => {
             setValue.call(this, val);
           },
         });
-        spyOnDevAndProd(el, 'setAttribute').and.callFake(function(name, val) {
+        spyOnDevAndProd(el, 'setAttribute').mockImplementation(function(name, val) {
           log.push(`node.setAttribute(${strify(name)}, ${strify(val)})`);
         });
       }

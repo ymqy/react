@@ -63,6 +63,10 @@ describe('ReactDOMFizzShellHydration', () => {
     });
   });
 
+  afterEach(() => {
+    if (console.error.mockReset) console.error.mockReset();
+  });
+
   async function serverAct(callback) {
     await callback();
     // Await one turn around the event loop.
@@ -302,7 +306,7 @@ describe('ReactDOMFizzShellHydration', () => {
       );
     });
     expect(console.error).toHaveBeenCalledTimes(1);
-    expect(console.error.calls.argsFor(0)[0].toString()).toBe(
+    expect(console.error.mock.calls[0][0].toString()).toBe(
       'RangeError: Maximum call stack size exceeded',
     );
   });

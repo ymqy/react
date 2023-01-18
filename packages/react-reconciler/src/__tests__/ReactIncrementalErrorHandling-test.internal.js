@@ -29,6 +29,10 @@ describe('ReactIncrementalErrorHandling', () => {
     act = require('jest-react').act;
   });
 
+  afterEach(() => {
+    if (console.error.mockReset) console.error.mockReset();
+  });
+
   function div(...children) {
     children = children.map(c => (typeof c === 'string' ? {text: c} : c));
     return {type: 'div', children, prop: undefined, hidden: false};
@@ -1568,12 +1572,12 @@ describe('ReactIncrementalErrorHandling', () => {
 
     if (__DEV__) {
       expect(console.error).toHaveBeenCalledTimes(1);
-      expect(console.error.calls.argsFor(0)[0]).toContain(
+      expect(console.error.mock.calls[0][0]).toContain(
         'The above error occurred in the <BadRender> component:',
       );
     } else {
       expect(console.error).toHaveBeenCalledTimes(1);
-      expect(console.error.calls.argsFor(0)[0]).toBe(notAnError);
+      expect(console.error.mock.calls[0][0]).toBe(notAnError);
     }
   });
 
@@ -1965,10 +1969,10 @@ describe('ReactIncrementalErrorHandling', () => {
 
     if (__DEV__) {
       expect(console.error).toHaveBeenCalledTimes(2);
-      expect(console.error.calls.argsFor(0)[0]).toContain(
+      expect(console.error.mock.calls[0][0]).toContain(
         'Cannot update a component (`%s`) while rendering a different component',
       );
-      expect(console.error.calls.argsFor(1)[0]).toContain(
+      expect(console.error.mock.calls[1][0]).toContain(
         'The above error occurred in the <App> component',
       );
     }
